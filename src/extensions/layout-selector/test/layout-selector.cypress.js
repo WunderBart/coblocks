@@ -4,18 +4,16 @@
 import * as helpers from '../../../../.dev/tests/cypress/helpers';
 
 describe( 'Extension: Layout Selector', () => {
+	beforeEach( () => {
+		helpers.goTo( '/wp-admin/post-new.php?post_type=page' );
+		helpers.disableGutenbergFeatures();	} );
 
 	it( 'shows modal on add new "page" post_type', () => {
-		helpers.goTo( '/wp-admin/post-new.php?post_type=page' );
-		helpers.disableGutenbergFeatures();
-
 		// The new page post_type admin page is already loaded before tests run.
 		cy.get( '.coblocks-layout-selector-modal' ).should( 'exist' );
 	} );
 
 	it( 'loads layouts of each category', () => {
-		helpers.goTo( '/wp-admin/post-new.php?post_type=page' );
-		helpers.disableGutenbergFeatures();
 		cy.get( '.coblocks-layout-selector-modal' ).should( 'exist' );
 
 		// Click "About" category.
@@ -36,8 +34,6 @@ describe( 'Extension: Layout Selector', () => {
 	} );
 
 	it( 'inserts layout into page', () => {
-		helpers.goTo( '/wp-admin/post-new.php?post_type=page' );
-		helpers.disableGutenbergFeatures();
 		cy.get( '.coblocks-layout-selector-modal' ).should( 'exist' );
 
 		cy.get( '.coblocks-layout-selector__sidebar__item:nth-child(1)' ).find( 'a' ).click();
@@ -51,8 +47,6 @@ describe( 'Extension: Layout Selector', () => {
 	} );
 
 	it( 'inserts blank layout into page', () => {
-		helpers.goTo( '/wp-admin/post-new.php?post_type=page' );
-		helpers.disableGutenbergFeatures();
 		cy.get( '.coblocks-layout-selector-modal' ).should( 'exist' );
 
 		// Click "Add Blank Page" button.
@@ -73,9 +67,7 @@ describe( 'Extension: Layout Selector', () => {
 		cy.get( '.coblocks-layout-selector-modal' ).should( 'not.exist' );
 	} );
 
-	it( 'does not open modal when disabled via the "Editor Settings" panel', () => {
-		helpers.goTo( '/wp-admin/post-new.php?post_type=page' );
-		helpers.disableGutenbergFeatures();
+	it( 'does not open modal when disabled via the "Editor Settings" panel', () => {	
 		cy.get( '.coblocks-layout-selector-modal' )
 			.find( '.components-button[aria-label="Close dialog"]' ).first()
 			.click();
@@ -97,9 +89,7 @@ describe( 'Extension: Layout Selector', () => {
 		cy.get( '.coblocks-layout-selector-modal' ).should( 'exist' );
 	} );
 
-	it( 'imports images into media library from layouts', () => {
-		helpers.goTo( '/wp-admin/post-new.php?post_type=page' );
-		helpers.disableGutenbergFeatures();
+	it( 'imports images into media library from layouts', () => {	
 		// Click "About" category.
 		cy.get( '.coblocks-layout-selector__sidebar__item:nth-child(1)' ).find( 'a' ).click();
 		cy.get( '.coblocks-layout-selector__layout' ).contains( 'Test About Layout.' );
